@@ -5,5 +5,5 @@ export const productService = {
   getById: (id) => api.get(`/products/${id}`),
   create: (data) => api.post("/products", data),
   update: (id, data) => api.patch(`/products/${id}`, data),
-  delete: (id) => api.delete(`/products/${id}`),
+  remove: (id) => api.delete(`/products/${id}`),
 };

@@ -7,12 +7,15 @@ import { productSchema } from "../../../validation/productSchema";
 import { useProducts } from "../../../hooks/useProducts";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+// import { productService } from "../../../api/productService";
 
 const ProductFormPage = () => {
   const { id } = useParams();
   const nav = useNavigate();
   const { products, error, loading, updateProduct, createProduct } =
     useProducts();
+
+  // const { data, error, loading, update, create } = useCrud(productService);
   const {
     register,
     handleSubmit,

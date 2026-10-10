@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { productService } from "../api/productService";
 
-export const useProducts = () => {
-  const [products, setProducts] = useState([]);
+export const useProducts = (service, options = {}) => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchProducts = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
       setError(null);
-      const { data } = await productService.getAll();
-      setProducts(data.data);
+      const { data } = await service.getAll();
+      setData(data.data);
     } catch (error) {
       setError(error);
       throw error;
@@ -20,36 +20,32 @@ export const useProducts = () => {
     }
   };
 
-  const createProduct = async (payload) => {
-    console.log(payload);
-    const { data } = await productService.create(payload);
-    console.log(data);
-    setProducts((prev) => [...prev, data.data]);
+  const create = async (payload) => {
+    const { data } = await service.create(payload);
+    setData((prev) => [...prev, data.data]);
   };
 
-  const updateProduct = async (id, payload) => {
-    console.log(id, payload);
-    const { data } = await productService.update(id, payload);
-    console.log(data);
-    setProducts((prev) => prev.map((item) => (item._id === id ? data : item)));
+  const update = async (id, payload) => {
+    const { data } = await service.update(id, payload);
+    setData((prev) => prev.map((item) => (item._id === id ? data : item)));
   };
 
-  const deleteProduct = async (id) => {
-    await productService.delete(id);
-    setProducts((prev) => prev.filter((item) => item.id !== id));
+  const remove = async (id) => {
+    await service.remove(id);
+    setData((prev) => prev.filter((item) => item.id !== id));
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchData();
   }, []);
 
   return {
     products,
     loading,
     error,
-    fetchProducts,
-    createProduct,
-    updateProduct,
-    deleteProduct,
+    fetchData,
+    create,
+    update,
+    remove,
   };
 };
