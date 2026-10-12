@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const AboutPage = () => {
-  return <div>AboutPage</div>;
+  const data = useContext(UserContext);
+  console.log(data);
+  return <div>{JSON.stringify(data)}</div>;
 };
 
 export default AboutPage;
